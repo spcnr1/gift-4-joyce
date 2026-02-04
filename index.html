@@ -238,11 +238,12 @@ const loveScreen = document.getElementById("loveScreen");
 function unlock() {
   if (password.value === "05012026") {
     lockScreen.style.display = "none";
-    document.getElementById("bgMusic").play();
+    document.getElementById("bgMusic").play().catch(() => {});
   } else {
     alert("Wrong password 😭");
   }
 }
+
 
 
 // ✍️ LETTER
@@ -296,4 +297,5 @@ noBtn.addEventListener("mouseenter", () => {
 
 </body>
 </html>
+
 
