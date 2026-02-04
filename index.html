@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>For Joyce 🌸</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Sacramento&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #ff9ccf, #cdb4ff, #a2d2ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #4a2b3d;
+}
+
+/* 🔐 LOCK */
+#lockScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #ff9ccf, #cdb4ff, #a2d2ff);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+#lockScreen h1 {
+  font-family: 'Sacramento', cursive;
+  font-size: 3.6rem;
+}
+
+#lockScreen input {
+  padding: 14px 26px;
+  border-radius: 999px;
+  border: none;
+  width: 240px;
+  margin: 14px 0;
+  text-align: center;
+}
+
+#lockScreen button {
+  padding: 12px 34px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #ff6fae, #6c8cff);
+  color: white;
+  cursor: pointer;
+}
+
+/* 💎 CARD */
+#card {
+  width: 90%;
+  max-width: 880px;
+  padding: 70px;
+  border-radius: 46px;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 40px 110px rgba(120,120,255,0.25);
+  position: relative;
+}
+
+/* TITLE */
+#card h1 {
+  font-family: 'Sacramento', cursive;
+  font-size: 4.2rem;
+  text-align: center;
+}
+
+.hearts {
+  text-align: center;
+  font-size: 1.6rem;
+  margin: 10px 0 30px;
+}
+
+/* ✉️ LETTER */
+.letter {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 1.08rem;
+  line-height: 1.85;
+  white-space: pre-wrap;
+}
+
+/* QUESTION */
+.question {
+  text-align: center;
+  font-size: 1.35rem;
+  margin: 42px 0 24px;
+}
+
+/* BUTTONS */
+.buttons {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  height: 80px;
+}
+
+button.main {
+  width: 150px;
+  height: 48px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  background: linear-gradient(135deg, #ff6fae, #6c8cff);
+  color: white;
+}
+
+#noBtn {
+  position: absolute;
+  left: calc(50% + 96px);
+  top: 0;
+  transition: left 0.25s ease, top 0.25s ease;
+}
+
+/* 💖 LOVE SCREEN */
+#loveScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #ff6fae, #6c8cff, #a2d2ff);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+  z-index: 30;
+}
+
+#loveScreen.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#loveScreen h1 {
+  font-family: 'Sacramento', cursive;
+  font-size: 6rem;
+  color: white;
+}
+
+#loveScreen .heart {
+  font-size: 4rem;
+  animation: pulse 1.4s infinite;
+}
+
+@keyframes pulse {
+  50% { transform: scale(1.2); }
+}
+
+#backBtn {
+  margin-top: 36px;
+  padding: 10px 28px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255,255,255,0.25);
+  color: white;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+/* 💗 CONFETTI */
+.confetti {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  font-size: 20px;
+  animation: burst 1.6s ease forwards;
+}
+
+@keyframes burst {
+  to {
+    transform: translate(var(--x), var(--y)) rotate(360deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔐 LOCK -->
+<div id="lockScreen">
+  <h1>For Joyce 🌸</h1>
+  <input type="password" id="password" placeholder="password">
+  <button onclick="unlock()">Unlock 💗</button>
+</div>
+
+<!-- 💖 CARD -->
+<div id="card">
+  <h1>Happy First Month</h1>
+  <div class="hearts">💗 💕 💗</div>
+
+  <div class="letter" id="typingText"></div>
+
+  <div class="question">
+    Will you be my Valentine? 💖
+  </div>
+
+  <div class="buttons" id="buttonArea">
+    <button class="main" onclick="yesClicked()">YES 💕</button>
+    <button class="main" id="noBtn">NO 😭</button>
+  </div>
+</div>
+
+<!-- 💖 LOVE -->
+<div id="loveScreen">
+  <h1>I love you</h1>
+  <div class="heart">💖</div>
+  <button id="backBtn" onclick="goBack()">← Back</button>
+</div>
+
+<script>
+const typingText = document.getElementById("typingText");
+const noBtn = document.getElementById("noBtn");
+const buttonArea = document.getElementById("buttonArea");
+const loveScreen = document.getElementById("loveScreen");
+
+function unlock() {
+  if (password.value === "05012026") {
+    lockScreen.style.display = "none";
+  } else alert("Wrong password 😭");
+}
+
+// ✍️ LETTER
+const letterText = `To my favourite person,
+
+Words cannot describe the joy and meaning you have injected into my life. I will forever be grateful for the love and support you have shown me despite our distance, and I want you to know that I will always be here rooting and fighting for you.
+
+On this day, I want my beautiful ray of sunshine to be happy, just as I was the day I met you <3
+
+Always & Forever,
+
+From your (not so secret) admirer :) `;
+
+let i = 0;
+(function type() {
+  if (i < letterText.length) {
+    typingText.textContent += letterText.charAt(i++);
+    setTimeout(type, 22);
+  }
+})();
+
+// 💖 YES
+function yesClicked() {
+  loveScreen.classList.add("active");
+  for (let i = 0; i < 40; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.textContent = "💗";
+    c.style.setProperty("--x", (Math.random()*600-300)+"px");
+    c.style.setProperty("--y", (Math.random()*600-300)+"px");
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 1600);
+  }
+}
+
+// ↩ BACK
+function goBack() {
+  loveScreen.classList.remove("active");
+}
+
+// 😭 NO (moves only on hover)
+noBtn.addEventListener("mouseenter", () => {
+  const area = buttonArea.getBoundingClientRect();
+  const btn = noBtn.getBoundingClientRect();
+  const maxX = area.width - btn.width;
+  const maxY = area.height - btn.height;
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+});
+</script>
+
+</body>
+</html>
