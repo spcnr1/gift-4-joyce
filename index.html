@@ -85,7 +85,6 @@ body {
   margin: 10px 0 30px;
 }
 
-
 /* ✉️ LETTER */
 .letter {
   max-width: 640px;
@@ -235,13 +234,8 @@ const loveScreen = document.getElementById("loveScreen");
 function unlock() {
   if (password.value === "05012026") {
     lockScreen.style.display = "none";
-    document.getElementById("bgMusic").play().catch(() => {});
-  } else {
-    alert("Wrong password 😭");
-  }
+  } else alert("Wrong password 😭");
 }
-
-
 
 // ✍️ LETTER
 const letterText = `To my favourite person,
@@ -294,5 +288,3 @@ noBtn.addEventListener("mouseenter", () => {
 
 </body>
 </html>
-
-
