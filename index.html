@@ -85,6 +85,10 @@ body {
   margin: 10px 0 30px;
 }
 
+  <audio id="bgMusic" loop>
+  <source src="adore-you-official-audio.mp3" type="audio/mpeg">
+</audio>
+
 /* ✉️ LETTER */
 .letter {
   max-width: 640px;
@@ -234,8 +238,12 @@ const loveScreen = document.getElementById("loveScreen");
 function unlock() {
   if (password.value === "05012026") {
     lockScreen.style.display = "none";
-  } else alert("Wrong password 😭");
+    document.getElementById("bgMusic").play();
+  } else {
+    alert("Wrong password 😭");
+  }
 }
+
 
 // ✍️ LETTER
 const letterText = `To my favourite person,
@@ -288,3 +296,4 @@ noBtn.addEventListener("mouseenter", () => {
 
 </body>
 </html>
+
